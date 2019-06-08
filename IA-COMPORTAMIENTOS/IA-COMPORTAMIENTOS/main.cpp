@@ -63,12 +63,14 @@ void InitBoids()
 	boid3.b_Seek = true;
 	boid3.SetSeekPos(boid2.getBoidPosition(), 10);
 	boid3.m_sprite.setColor(sf::Color(255, 0, 0, 255));
+	boid3.b_obstacle = true;
 	//boid3.b_flee = true;
 	//boid3.SetFleeData(boid2.getBoidPosition(),boid2.getBoidRatio(), 200);
 	Boids.push_back(boid3);
 	Boid boid4;
 	boid4.init(.2, 0, 10, 3, 10, 500);
 	boid4.b_Seek = true;
+	boid4.b_obstacle = true;
 	boid4.SetSeekPos(boid2.getBoidPosition(), 10);
 	boid4.m_sprite.setColor(sf::Color(0, 255, 255, 255));
 	Boids.push_back(boid4);
@@ -79,13 +81,51 @@ void InitBoids()
 	boid5.b_followPath = true;
 	boid5.SetFollowPath(objetives[0], objetives[1], 20, 30, 10);
 	boid5.m_sprite.setColor(sf::Color(255, 105, 200, 255));
-	boid5.m_wamderPos = vector2(1000,1000);
+	boid5.m_wamderPos = vector2(1000, 1000);
 	Boids.push_back(boid5);
+	Boid boid6;
+	boid6.init(.2, 0, 2, 2, 125, 200);
+	//boid6.b_Seek = true;
+	boid6.b_evade = true;
+	Boids.push_back(boid6);
+	Boid boid7;
+	boid7.init(.2, 0, 2, 2, 0, 0);
+	boid7.b_pursue = true;
+	Boids.push_back(boid7);
+	Boid boid8;
+	boid8.init(.1, 0, 3, 2, 1050, 450);
+	boid8.b_flee = true;
+	boid8.SetFleeData(objetives[0],500,20);
+	Boids.push_back(boid8);
+	Boid boid9;
+	boid9.init(.1, 0, 2, 2, 0, 0);
+	boid9.b_arrive = true;
+	boid9.m_sprite.setColor(sf::Color(0, 0, 255, 255));
+	boid9.SetArriveData(objetives[0], 20, 20);
+	Boids.push_back(boid9);
+	Boid boid10;
+	boid10.init(.8, 0, 1, 2, 1000, 1000);
+	boid10.b_wandeRam=true;
+	Boids.push_back(boid10);
+	Boid boid11;
+	boid11.m_sprite.setColor(sf::Color(0, 255, 0, 255));
+	boid11.init(.8, 0, 1, 2, 500, 500);
+	boid11.b_wandeRamTime = true;
+	Boids.push_back(boid11);
+	Boid boid12;
+	boid12.init(.8, 0, 1, 2,1000,1000);
+	boid12.b_wandeToPoint = true;
+	Boids.push_back(boid12);
 }
 
 void update()
 {
-	Boids[4].m_wamderPos = mousePos;
+	Boids[11].m_wamderPos = mousePos;
+	Boids[2].SetobstacleData(Boids[4].getBoidPosition(),100,1000);
+	Boids[3].SetobstacleData(Boids[4].getBoidPosition(), 100, 1000);
+	Boids[5].SetSeekPos(mousePos,10);
+	Boids[5].SetEvadeData(Boids[6].getBoidPosition(), Boids[6].getBoidDirection(), Boids[6].getBoidSpeed(), 20);
+	Boids[6].SetPursueData(Boids[5].getBoidPosition(), Boids[5].getBoidDirection(), Boids[5].getBoidSpeed(), 20);
 	//Boids[4].SetSeekPos(mousePos,10);
 	for (int i = 0; i < Boids.size(); i++)
 	{

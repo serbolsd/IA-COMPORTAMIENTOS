@@ -47,18 +47,27 @@ void Boid::SetArriveData(const vector2 & arrivePos, const float & ratio, const f
 	m_arriveMangitude = magnitud;
 }
 
-void Boid::SetPursueData(const vector2 & objetivePos, const vector2 & objetiveDir, const float & magnitud)
+void Boid::SetPursueData(const vector2 & objetivePos, const vector2 & objetiveDir, const float & objetiveSpeed, const float & magnitud)
 {
 	m_objetivePos = objetivePos;
 	m_objetiveDir = objetiveDir;
 	m_pursueMangitude = magnitud;
+	m_objetiveSpeed = objetiveSpeed;
 }
 
-void Boid::SetEvadeData(const vector2 & predatorPos, const vector2 & predatorDir, const float & magnitud)
+void Boid::SetEvadeData(const vector2 & predatorPos, const vector2 & predatorDir, const float & predatorSpeed, const float & magnitud)
 {
 	m_predatorPos = predatorPos;
 	m_predatorDir = predatorDir;
 	m_evadeMangitude = magnitud;
+	m_predatorSpeed = predatorSpeed;
+}
+
+void Boid::SetobstacleData(const vector2 & objetPos, const float & ratio, const float & magnitud)
+{
+	m_obstaclePos = objetPos;
+	m_obstacleRatio = ratio;
+	m_obstacleMagnitud = magnitud;
 }
 
 void Boid::SetFollowPath(const vector2 & pointA, const vector2 & pointB, const float & pathRatio, const float & pointRatio, const float & magnitud)
@@ -117,11 +126,15 @@ void Boid::update()
 	}
 	if (b_pursue)
 	{
-		newdirection += pursue(m_position, m_objetivePos, m_objetiveDir, 10, 10, m_pursueMangitude);
+		newdirection += pursue(m_position, m_objetivePos, m_objetiveDir, 2,m_objetiveSpeed, m_pursueMangitude);
 	}
 	if (b_evade)
 	{
-		newdirection += evade(m_position, m_predatorPos, m_predatorDir, 10, 10, m_evadeMangitude);
+		newdirection += evade(m_position, m_predatorPos, m_predatorDir, 2,m_predatorSpeed , m_evadeMangitude);
+	}
+	if (b_obstacle)
+	{
+		newdirection += obstacle(m_position, m_obstaclePos, m_obstacleRatio,m_obstacleMagnitud);
 	}
 	if (b_wandeRam)
 	{
@@ -129,7 +142,7 @@ void Boid::update()
 	}
 	if (b_wandeRamTime)
 	{
-		newdirection += wanderRamwhitTime(m_position, m_wamderPos, 500, 500, m_wanderTime, 3, 10);
+		newdirection += wanderRamwhitTime(m_position, m_wamderPos, 1000, 1000, m_wanderTime, 3, 10);
 	}
 	if (b_wandeToPoint)
 	{
@@ -233,12 +246,12 @@ vector2 Boid::arrive(const vector2& posI, const vector2 & posF, const float & ma
 	dir -= posI;
 	m = dir.magnitud();
 	dir = dir.normalize();
-	dir /= m;
 	F = dir * magnitud;
-	if (m<ratio)
+	if (m < ratio)
 	{
-		float proporcion = magnitud / ratio;
-		F *= proporcion;
+		float proporcion = magnitud * m / ratio;
+		F = dir;
+		F*=proporcion;
 	}
 	return F;
 }

@@ -35,10 +35,16 @@ private:
 	vector2 m_objetivePos;
 	vector2 m_objetiveDir;
 	float m_pursueMangitude;
+	float m_objetiveSpeed;
 	//evade data
 	vector2 m_predatorPos;
 	vector2 m_predatorDir;
 	float m_evadeMangitude;
+	float m_predatorSpeed;
+	//obstacle
+	vector2 m_obstaclePos;
+	float m_obstacleRatio;
+	float m_obstacleMagnitud;
 	//Wander
 	//follow Path
 	vector2 follow_pointA;
@@ -59,6 +65,7 @@ public:
 	bool b_arrive=false;
 	bool b_pursue=false;
 	bool b_evade = false;
+	bool b_obstacle = false;
 	bool b_wandeRam = false;
 	bool b_wandeRamTime = false;
 	bool b_wandeToPoint = false;
@@ -66,13 +73,15 @@ public:
 	void SetSeekPos(const vector2& objetivePos,const float & magnitud);
 	void SetFleeData(const vector2& objetPos, const float & ratio, const float & magnitud);
 	void SetArriveData(const vector2& arrivePos, const float & ratio, const float & magnitud);
-	void SetPursueData(const vector2& objetivePos, const vector2& objetiveDir, const float & magnitud);
-	void SetEvadeData(const vector2 & predatorPos, const vector2 & predatorDir, const float & magnitud);
+	void SetPursueData(const vector2& objetivePos, const vector2& objetiveDir, const float & objetiveSpeed, const float & magnitud);
+	void SetEvadeData(const vector2 & predatorPos, const vector2 & predatorDir, const float & predatorSpeed, const float & magnitud);
+	void SetobstacleData(const vector2& objetPos, const float & ratio, const float & magnitud);
 	void SetFollowPath(const vector2& pointA, const vector2& pointB,const float & pathRatio, const float & pointRatio, const float & magnitud);
 	void setBoidRatio(const float &ratio) { m_ratio =ratio; };
 	vector2 getBoidPosition() { return m_position; };
 	vector2 getBoidDirection() { return m_direccion; };
 	float getBoidRatio() { return m_ratio; };
+	float getBoidSpeed() { return m_speed; };
 public:
 	void init(const float& weight = 1.0f, const float& speed = 2, const float& maxSpeed = 2, const float& acceleration = 1.0f, const float& posX = 0.0f, const float& posY = 0.0f);
 	void destroy();
