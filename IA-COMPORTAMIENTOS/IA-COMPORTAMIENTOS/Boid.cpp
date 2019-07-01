@@ -434,7 +434,7 @@ vector2 Boid::followPaht(const vector2 & pointA, const vector2 & pointB, const v
 	float dist = dir.magnitud();
 	if (dist > pathRatio)
 	{
-		F += seek(pos, PP, magnitud * 4);
+		F += seek(pos, PP, magnitud/2 );
 	}
 	dir = pointB;
 	dir -= pos;
@@ -448,6 +448,23 @@ vector2 Boid::followPaht(const vector2 & pointA, const vector2 & pointB, const v
 		arrivepoint = false;
 	}
 	return F;
+}
+
+vector2 Boid::followPaht2(const vector2 & pointA, const vector2 & pointB, const vector2 & pos, const float & pathRatio, const float & pointRatio, const float & magnitud, bool & arrivepoint)
+{
+	//dir = pointB;
+	//dir -= pos;
+	//dist = dir.magnitud();
+	//if (dist <= pointRatio)
+	//{
+	//	arrivepoint = true;
+	//}
+	//else
+	//{
+	//	arrivepoint = false;
+	//}
+	//return F;
+	return vector2();
 }
 
 bool Boid::bf_arrive(const vector2 & posI, const vector2 & posF, const float & ratio)

@@ -97,6 +97,7 @@ public:
 	static vector2 wanderRamwhitTime(const vector2& posI, vector2& posF, const float & rangeX, const float & rangeY, float & timeTrans,const float & timeToChange, const float & magnitud);
 	static vector2 wanderToPoint(const vector2& posI, const vector2& posF, const float & ratio,const float& angle, const float & magnitud);
 	static vector2 followPaht(const vector2& pointA, const vector2& pointB, const vector2& pos,const float & pathRatio, const float & pointRatio, const float & magnitud,bool&arrivepoint);
+	static vector2 followPaht2(const vector2& pointA, const vector2& pointB, const vector2& pos,const float & pathRatio, const float & pointRatio, const float & magnitud,bool&arrivepoint);
 	static bool bf_arrive(const vector2& posI, const vector2 & posF, const float & ratio);
 	void changeSeekPos(const std::vector<vector2>& vec);
 
